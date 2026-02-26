@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Users } from '../../services/users';
-import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { IUser } from '../../interfaces/i-user';
 
 @Component({
   selector: 'app-detalle',
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './detalle.html',
   styleUrl: './detalle.css',
 })

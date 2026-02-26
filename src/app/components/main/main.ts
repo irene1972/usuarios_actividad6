@@ -1,13 +1,12 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Users } from '../../services/users';
-import { CommonModule } from '@angular/common';
 import { Card } from '../card/card';
 import { IUser } from '../../interfaces/i-user';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
-  imports: [CommonModule, Card],
+  imports: [Card],
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
