@@ -1,6 +1,5 @@
 import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
 import { Users } from '../../services/users';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';

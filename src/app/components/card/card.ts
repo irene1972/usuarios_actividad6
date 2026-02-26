@@ -1,7 +1,8 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Users } from '../../services/users';
 import Swal from 'sweetalert2';
+import { IUser } from '../../interfaces/i-user';
 
 @Component({
   selector: 'app-card',
@@ -10,16 +11,20 @@ import Swal from 'sweetalert2';
   styleUrl: './card.css',
 })
 export class Card {
-  miUsuario:any;
+  miUsuario:IUser | null=null;
   usersService=inject(Users);
 
   @Input() imagen:string='';
   @Input() nombre:string='';
-  @Input() id:number=0;
+  @Input() id:string='0';
   @Input() _id:string|undefined='';
 
-  eliminar($event:any,id:any){
+  @Output() fotoEmitir:EventEmitter<string>=new EventEmitter();
+
+  eliminar($event:Event,id:string | undefined){
       $event.preventDefault();
+      this.fotoEmitir.emit(id);
+
       Swal.fire({
         title: '¿Estás seguro de eliminar el usuario?',
         showDenyButton: false,

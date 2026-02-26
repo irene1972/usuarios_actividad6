@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { Users } from '../../services/users';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs';
 import { Card } from '../card/card';
+import { IUser } from '../../interfaces/i-user';
 
 @Component({
   selector: 'app-main',
@@ -12,8 +12,20 @@ import { Card } from '../card/card';
 })
 export class Main {
   usersService = inject(Users);
+  misUsuarios:IUser[] | undefined=undefined;
+  idUsuario:string='';
 
-  items$ = this.usersService.getAllUsers().pipe(
-    map((resp) => resp.results)
-  );
+  constructor(private cd: ChangeDetectorRef) { }
+
+  ngOnInit(){
+    this.usersService.getAllUsers().subscribe((data) => {
+      this.misUsuarios = data.results;
+      this.cd.detectChanges();
+    });
+  }
+
+  recogerId($event:string){
+    this.idUsuario=$event;
+    this.misUsuarios=this.misUsuarios?.filter(elem=>elem._id !== $event);
+  }
 }
