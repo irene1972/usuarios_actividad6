@@ -25,13 +25,13 @@ export class Detalle {
       this.id = params.id;
 
     });
-   
-    this.usersService.getUserById(this.id).subscribe((data)=>{
-      console.log('data:',data);
-      this.miUsuario=data;
+
+    this.usersService.getUserById(this.id).subscribe((data) => {
+      console.log('data:', data);
+      this.miUsuario = data;
       this.cd.detectChanges();
     });
-    
+
   }
 
   eliminar($event: any, id: string | undefined) {
@@ -47,13 +47,13 @@ export class Detalle {
       if (result.isConfirmed) {
 
         this.usersService.deleteUser(id).subscribe((data) => {
-          this.miUsuario=data;
-          this.cd.detectChanges();
 
           if (data.error) {
             Swal.fire('Ha habido un error', '', 'info');
           } else {
             Swal.fire('Eliminado!', data.first_name, 'success');
+            this.miUsuario = null;
+            this.cd.detectChanges();
           }
         });
       }
