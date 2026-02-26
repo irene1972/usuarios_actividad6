@@ -1,41 +1,40 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { Users } from '../../services/users';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { IUser } from '../../interfaces/i-user';
 
 @Component({
   selector: 'app-detalle',
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './detalle.html',
   styleUrl: './detalle.css',
 })
 export class Detalle {
-  usuario$!: Observable<any>;
-  activedRoute=inject(ActivatedRoute);
-  usersService=inject(Users);
-  id:string='';
-  
-  miUsuario:any=null;
+  activedRoute = inject(ActivatedRoute);
+  usersService = inject(Users);
+  id: string = '';
+  miUsuario: IUser | null = null;
 
-  ngOnInit(){
-    this.activedRoute.params.subscribe((params:any)=>{
-      this.id=params.id;
-      
+  constructor(private cd: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.activedRoute.params.subscribe((params: any) => {
+      this.id = params.id;
+
     });
-    this.usuario$ = this.activedRoute.params.pipe(
-      switchMap(params => this.usersService.getUserById(params['id']))
-    );
-    /*
+   
     this.usersService.getUserById(this.id).subscribe((data)=>{
-      console.log(data);
+      console.log('data:',data);
       this.miUsuario=data;
+      this.cd.detectChanges();
     });
-    */
+    
   }
 
-  eliminar($event:any,id:string){
+  eliminar($event: any, id: string | undefined) {
     $event.preventDefault();
     Swal.fire({
       title: '¿Estás seguro de eliminar el usuario?',
@@ -47,16 +46,18 @@ export class Detalle {
     }).then((result) => {
       if (result.isConfirmed) {
 
-          this.usersService.deleteUser(id).subscribe((data)=>{
+        this.usersService.deleteUser(id).subscribe((data) => {
+          this.miUsuario=data;
+          this.cd.detectChanges();
 
-          if(data.error){
+          if (data.error) {
             Swal.fire('Ha habido un error', '', 'info');
-          }else{
+          } else {
             Swal.fire('Eliminado!', data.first_name, 'success');
           }
         });
       }
     });
   }
-  
+
 }

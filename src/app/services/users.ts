@@ -27,7 +27,7 @@ export class Users {
     let url='https://peticiones.online/api/users';
     return this.httpClient.post(url,body, {});
   }
-  deleteUser(id:string):Observable<any>{
+  deleteUser(id:string | undefined):Observable<any>{
     let url='https://peticiones.online/api/users/';
     return this.httpClient.delete(url + id,{});
   }
