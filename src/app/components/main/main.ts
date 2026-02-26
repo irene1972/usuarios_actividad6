@@ -38,7 +38,7 @@ export class Main {
 
         if(params.get('nombre')) this.misUsuarios?.push(newUser);
         
-        console.log(this.misUsuarios);
+        //console.log(this.misUsuarios);
         this.cd.detectChanges();
 
       });

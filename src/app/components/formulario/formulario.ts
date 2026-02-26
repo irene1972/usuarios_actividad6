@@ -79,13 +79,11 @@ export class Formulario {
     if (Object.keys(this.miUsuario).length > 0) {
       //actualizar datos    
       this.usersService.updateUser(this.paramId, body).subscribe((data) => {
-        console.log(data);
-        console.log(body);
         if (data.error) {
           Swal.fire('Ha habido un error', '', 'info');
 
         } else {
-          this.miForm.reset();
+          //this.miForm.reset();
           Swal.fire('Actualizado!', body.nombre, 'success');
         }
 
@@ -99,7 +97,7 @@ export class Formulario {
         if (data.error) {
           Swal.fire('Ha habido un error', '', 'info');
         } else {
-          console.log(this.miForm.value);
+          //console.log(this.miForm.value);
           //this.miForm.reset();
           Swal.fire('Guardado!', body.nombre, 'success');
           this.router.navigate(['/home',this.miForm.value]);

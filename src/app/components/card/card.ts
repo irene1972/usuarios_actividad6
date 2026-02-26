@@ -35,7 +35,7 @@ export class Card {
         if (result.isConfirmed) {
   
             this.usersService.deleteUser(id).subscribe((data)=>{
-            console.log(data);
+            //console.log(data);
   
             if(data.error){
               Swal.fire('Ha habido un error', '', 'info');

@@ -26,7 +26,7 @@ export class Detalle {
     });
 
     this.usersService.getUserById(this.id).subscribe((data) => {
-      console.log('data:', data);
+      //console.log('data:', data);
       this.miUsuario = data;
       this.cd.detectChanges();
     });
