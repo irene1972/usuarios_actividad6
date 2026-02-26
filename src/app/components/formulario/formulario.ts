@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Users } from '../../services/users';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -21,7 +21,7 @@ export class Formulario {
 
   activeRoute = inject(ActivatedRoute);
 
-  constructor() {
+  constructor(private router: Router) {
 
     this.miForm = new FormGroup({
       nombre: new FormControl('', [
@@ -45,14 +45,11 @@ export class Formulario {
     this.activeRoute.params.subscribe((params: any) => {
       if (Object.keys(params).length > 0) {
         //FORMULARIO DE ACTUALIZACIÓN
-        //todo: arreglar cuando la api devuelva los datos correctamente
 
         this.titulo = 'ACTUALIZAR USUARIO';
         this.textoBoton = 'Actualizar';
         this.paramId = params.id;
-        //console.log(this.paramId);
-        //this.miUsuario=this.usersService.getUserById(params.id);
-        //console.log(this.usersService.getUserById(params.id));
+
         this.usersService.getUserById(params.id).subscribe((data) => {
           this.miUsuario = data;
 
@@ -96,15 +93,16 @@ export class Formulario {
 
     } else {
       //guardar datos
-      let insertar: any;
 
-      insertar = this.usersService.insertUser(body).subscribe((data) => {
+      this.usersService.insertUser(body).subscribe((data) => {
 
         if (data.error) {
           Swal.fire('Ha habido un error', '', 'info');
         } else {
-          this.miForm.reset();
+          console.log(this.miForm.value);
+          //this.miForm.reset();
           Swal.fire('Guardado!', body.nombre, 'success');
+          this.router.navigate(['/home',this.miForm.value]);
         }
       });
     }
