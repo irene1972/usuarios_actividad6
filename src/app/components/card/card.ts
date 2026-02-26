@@ -23,7 +23,6 @@ export class Card {
 
   eliminar($event:Event,id:string | undefined){
       $event.preventDefault();
-      this.fotoEmitir.emit(id);
 
       Swal.fire({
         title: '¿Estás seguro de eliminar el usuario?',
@@ -41,6 +40,7 @@ export class Card {
             if(data.error){
               Swal.fire('Ha habido un error', '', 'info');
             }else{
+              this.fotoEmitir.emit(id);
               Swal.fire('Eliminado!', data.first_name, 'success');
             }
           });
