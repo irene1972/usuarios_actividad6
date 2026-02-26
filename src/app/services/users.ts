@@ -3,12 +3,14 @@ import { inject, Injectable } from '@angular/core';
 import { IUserResponse } from '../interfaces/i-user-response';
 import { firstValueFrom, Observable } from 'rxjs';
 import { IUser } from '../interfaces/i-user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Users {
-  private baseUrl='https://peticiones.online/api/users';
+  //private baseUrl='https://peticiones.online/api/users';
+  private baseUrl=environment.apiUrl;
   httpClient=inject(HttpClient)
 
   getAllUsers():Observable<IUserResponse>{
@@ -24,15 +26,12 @@ export class Users {
   }
 
   insertUser(body:IUser):Observable<any>{
-    let url='https://peticiones.online/api/users';
-    return this.httpClient.post(url,body, {});
+    return this.httpClient.post(this.baseUrl,body, {});
   }
   deleteUser(id:string | undefined):Observable<any>{
-    let url='https://peticiones.online/api/users/';
-    return this.httpClient.delete(url + id,{});
+    return this.httpClient.delete(this.baseUrl + '/' + id,{});
   }
   updateUser(id:number,body:IUser):Observable<any>{
-    let url='https://peticiones.online/api/users/';
-    return this.httpClient.put(url + id,body,{})
+    return this.httpClient.put(this.baseUrl + '/' + id,body,{})
   }
 }
