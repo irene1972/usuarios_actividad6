@@ -29,9 +29,8 @@ export class Card {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-            let eliminar:any;
   
-            eliminar=this.usersService.deleteUser(id).subscribe((data)=>{
+            this.usersService.deleteUser(id).subscribe((data)=>{
             console.log(data);
   
             if(data.error){
